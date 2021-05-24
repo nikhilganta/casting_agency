@@ -1,3 +1,4 @@
+import os
 import json
 from flask import request, _request_ctx_stack, abort
 from functools import wraps
@@ -5,7 +6,7 @@ from jose import jwt
 from urllib.request import urlopen
 
 
-AUTH0_DOMAIN = 'udacityfswd.us.auth0.com'
+AUTH0_DOMAIN = os.environ['AUTH0_DOMAIN']
 ALGORITHMS = ['RS256']
 API_AUDIENCE = 'casting'
 
@@ -66,6 +67,7 @@ def get_token_auth_header():
     token = parts[1]
     return token
 
+
 '''
 @TODO implement check_permissions(permission, payload) method
     @INPUTS
@@ -82,14 +84,15 @@ def get_token_auth_header():
 
 def check_permissions(permission, payload):
     if 'permissions' not in payload:
-                        raise AuthError({
-                            'code': 'invalid_claims',
-                            'description': 'Permissions not included in JWT.'
-                        }, 400)
+        raise AuthError({
+            'code': 'invalid_claims',
+            'description': 'Permissions not included in JWT.'
+        }, 400)
 
     if permission not in payload['permissions']:
         abort(403)
     return True
+
 
 '''
 @TODO implement verify_decode_jwt(token) method
@@ -160,6 +163,7 @@ def verify_decode_jwt(token):
                 'code': 'invalid_header',
                 'description': 'Unable to find the appropriate key.'
             }, 400)
+
 
 '''
 @TODO implement @requires_auth(permission) decorator method

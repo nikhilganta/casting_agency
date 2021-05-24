@@ -1,10 +1,12 @@
 from flask_sqlalchemy import SQLAlchemy
+import os
 
 db = SQLAlchemy()
 
 # database_name = "castingagency"
-# database_path = "postgresql://{}@{}/{}".format('postgres', 'localhost:5432', database_name)
-database_path = "postgres://wyiutypddswsme:19d4037b1e9f15491fc94a4c5163fa9277d93f24d36b801ff98d6e52a9fc7f1d@ec2-54-160-96-70.compute-1.amazonaws.com:5432/d79h1jeemeilmq"
+# database_path = "postgresql://{}@{}/{}".format('postgres',\
+#  'localhost:5432', database_name)
+database_path = os.environ['DATABASE_URL']
 
 
 def setup_db(app, database_path=database_path):
@@ -13,6 +15,7 @@ def setup_db(app, database_path=database_path):
     db.app = app
     db.init_app(app)
     db.create_all()
+
 
 '''
 Actor
@@ -49,6 +52,7 @@ class Actor(db.Model):
             'age': self.age,
             'gender': self.gender
         }
+
 
 '''
 Movie
