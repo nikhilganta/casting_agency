@@ -14,7 +14,7 @@ NO_PERMISSION_ROLE = ('eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlVnUzVJdGl0U
 
 
 class CastingAgencyTestCase(unittest.TestCase):
-    
+
     def setUp(self):
         self.app = create_app()
         self.client = self.app.test_client
@@ -35,7 +35,7 @@ class CastingAgencyTestCase(unittest.TestCase):
 
         self.new_movie = {
             'title': 'Iron Man',
-            'release_date':'05-10-2021'
+            'release_date': '05-10-2021'
         }
 
         self.new_movie_1 = {
@@ -74,34 +74,34 @@ class CastingAgencyTestCase(unittest.TestCase):
         res = self.client().post('/actors', json=self.new_actor,
         headers={'Authorization': f'Bearer {CASTING_DIRECTOR}'})
         data = json.loads(res.data)
-        
+
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
         self.assertEqual(len(data['actors']), 1)
-    
+
     def test_create_movies(self):
         res = self.client().post('/movies', json=self.new_movie,
         headers={'Authorization': f'Bearer {EXECUTIVE_PRODUCER}'})
         data = json.loads(res.data)
-        
+
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
         self.assertEqual(len(data['movies']), 1)
-    
+
     def test_422_if_create_actor_data_is_none(self):
         res = self.client().post('/actors', json=self.new_actor_1,
         headers={'Authorization': f'Bearer {CASTING_DIRECTOR}'})
         data = json.loads(res.data)
-        
+
         self.assertEqual(res.status_code, 422)
         self.assertEqual(data['success'], False)
         self.assertEqual(data['message'], 'unprocessable')
-    
+
     def test_422_if_create_movie_data_is_none(self):
         res = self.client().post('/movies', json=self.new_movie_1,
         headers={'Authorization': f'Bearer {EXECUTIVE_PRODUCER}'})
         data = json.loads(res.data)
-        
+
         self.assertEqual(res.status_code, 422)
         self.assertEqual(data['success'], False)
         self.assertEqual(data['message'], 'unprocessable')
@@ -125,7 +125,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
         self.assertEqual(len(data['movies']), 1)
-    
+
     def test_404_if_update_actor_is_none(self):
         res = self.client().patch('/actors/100', json=self.new_actor_1,
         headers={'Authorization': f'Bearer {CASTING_DIRECTOR}'})
@@ -161,7 +161,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
         self.assertEqual(data['movie'], 1)
-    
+
     def test_404_if_delete_actor_is_none(self):
         res = self.client().delete('/actors/100',
         headers={'Authorization': f'Bearer {CASTING_DIRECTOR}'})
@@ -196,7 +196,7 @@ class CastingAgencyTestCase(unittest.TestCase):
 
         self.assertEqual(res.status_code, 403)
         self.assertEqual(data['message'], 'Permission not found')
-    
+
     # Casting Assistant cannot perform Casting director actions
     def test_rbac_create_actor(self):
         res = self.client().post('/actors', json=self.new_actor,
