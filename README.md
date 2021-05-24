@@ -1,5 +1,7 @@
 # Udacity Capstone Project - Casting Agency
 
+Project URL - [https://new-casting-agency.herokuapp.com](https://new-casting-agency.herokuapp.com)
+
 ## Introduction
 
 The Casting Agency models a company that is responsible for creating movies and managing and assigning actors to those movies.
@@ -58,32 +60,184 @@ Using postman, the below requests can be performed!
 
 #### GET /
 - General: Displays a json representing the Home Page!
-- Sample: 
+- Sample request: https://new-casting-agency.herokuapp.com/
+- Sample response:
+```
+{
+    "message": "Home Page"
+}
+```
 
 #### GET /actors
 - General: Returns the list of actors present in the database
 - Who can access: Casting Assistant, Casting Director, Executive Producer
+- Sample request: GET https://new-casting-agency.herokuapp.com/actors
+- Sample Response:
+```
+{
+    "actors": [
+        {
+            "age": 25,
+            "gender": "M",
+            "id": 4,
+            "name": "NIKHIL GANTA"
+        },
+        {
+            "age": 50,
+            "gender": "M",
+            "id": 5,
+            "name": "TONY START"
+        }
+    ],
+    "success": true
+}
+```
 #### GET /movies
 - General: Returns the list of movies present in the database
 - Who can access: Casting Assistant, Casting Director, Executive Producer
+- Sample request: GET https://new-casting-agency.herokuapp.com/movies
+- Sample response:
+```
+{
+    "movies": [
+        {
+            "id": 1,
+            "release_date": "Sat, 03 May 2003 00:00:00 GMT",
+            "title": "Iron Man 1"
+        },
+        {
+            "id": 2,
+            "release_date": "Tue, 03 May 2005 00:00:00 GMT",
+            "title": "Iron Man 2"
+        },
+        {
+            "id": 3,
+            "release_date": "Thu, 03 May 2007 00:00:00 GMT",
+            "title": "Iron Man 3"
+        }
+    ],
+    "success": true
+}
+```
 
 #### POST /actors
 - General: Creates a new actor using new name, age and gender
 - Who can access: Casting Director, Executive Producer
+- Request Body:
+```
+{
+    "name": "NIKHIL GANTA",
+    "age": 25,
+    "gender": "M"
+}
+```
+- Sample request: https://new-casting-agency.herokuapp.com/actors
+- Sample Response:
+```
+{
+    "actors": [
+        {
+            "age": 25,
+            "gender": "M",
+            "id": 4,
+            "name": "NIKHIL GANTA"
+        }
+    ],
+    "success": true
+}
+```
 #### POST /movies
 - General: Creates a new movie using new title and release date
 - Who can access: Executive Producer
+- Request Body:
+```
+{
+    "title": "Iron Man 1",
+    "release_date": "05-03-2003"
+}
+```
+- Sample request: POST https://new-casting-agency.herokuapp.com/movies
+- Sample response:
+```
+{
+    "movies": [
+        {
+            "id": 1,
+            "release_date": "Sat, 03 May 2003 00:00:00 GMT",
+            "title": "Iron Man 1"
+        }
+    ],
+    "success": true
+}
+```
 
 #### PATCH /actors/<int: id>
 - General: Update the details of actor with an id = id using a new name, age or gender
 - Who can access: Casting Director, Executive Producer
+- Request Body:
+```
+{
+    "name": "Nikhil",
+    "age": 26
+}
+```
+- Sample request: PATCH https://new-casting-agency.herokuapp.com/actors/4
+- Sample response:
+```
+{
+    "actors": [
+        {
+            "age": 26,
+            "gender": "M",
+            "id": 4,
+            "name": "Nikhil"
+        }
+    ],
+    "success": true
+}
+```
 #### PATCH /movies/<int: id>
 - General: Update the details of movie with an id = id using a new title or release date
 - Who can access: Casting Director, Executive Producer
-
+- Request Body:
+```
+{
+    "release_date": "12-10-2007"
+}
+```
+- Sample request: PATCH https://new-casting-agency.herokuapp.com/movies/3
+- Sample response:
+```
+{
+    "movies": [
+        {
+            "id": 3,
+            "release_date": "Mon, 10 Dec 2007 00:00:00 GMT",
+            "title": "Iron Man 3"
+        }
+    ],
+    "success": true
+}
+```
 #### DELETE /actors/<int: id>
 - General: Delete the actor with id = id if it exists from the database
 - Who can access: Casting Director, Executive Producer
+- Sample request: DELETE https://new-casting-agency.herokuapp.com/actors/5
+- Sample response:
+```
+{
+    "actor": 5,
+    "success": true
+}
+```
 #### DELETE /movies/<int: id>
 - General: Delete the movie with id = id if it exists from the database
 - Who can access: Executive Producer
+- Sample request: DELETE https://new-casting-agency.herokuapp.com/movies/2
+- Sample response:
+```
+{
+    "movie": 2,
+    "success": true
+}
+```
